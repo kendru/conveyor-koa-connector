@@ -15,7 +15,11 @@ const app = new Koa();
 const c = conveyor.Client('localhost', 3000, false);
 app.use(bodyParser());
 
-connect(app, c.getConnection(), 'http://localhost:8080')
-    .then(() => app.listen(8080));
-
+app.listen(8080, async () => {
+    // The application should not be connected until after it is ready to
+    // receive connections, since conveyor will immediately issue a WebHook
+    // challenge before accepting subscriptions.
+    await connect(app, c.getConnection(), 'http://localhost:8080');
+    console.log('Connected to Conveyor for subscriptions.');
+});
 ```

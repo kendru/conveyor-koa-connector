@@ -22,7 +22,7 @@ async function connect(koaApp, conn, baseUrl) {
         })
 
         return baseUrl + callbackEndpoint
-    })    
+    })
 }
 
 module.exports = connect
