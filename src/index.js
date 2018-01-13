@@ -1,10 +1,16 @@
-const conveyor = require('conveyor-client')
+const { impl } = require('conveyor-client')
 const crypto = require('crypto')
 
-async function connect(koaApp, conn, baseUrl) {
+async function connect(koaApp, connectionOrClient, baseUrl) {
     const callbackEndpoint = `/${crypto.randomBytes(16).toString('hex')}`
+    let connection
+    if (connectionOrClient.getConnection) {
+        connection = connectionOrClient.getConnection()
+    } else {
+        connection = connectionOrClient
+    }
 
-    await conveyor.registerSubscriptionImpl(conn, function registerImplementation(emit, cancel) {
+    await impl.registerSubscriptionImpl(connection, function registerImplementation(emit, cancel) {
         koaApp.use(async function (ctx, next) {
             if (ctx.path !== callbackEndpoint) {
                 await next()
