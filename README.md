@@ -9,13 +9,13 @@ to enable WebHook subscriptions using the koa web framework.
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const conveyor = require('conveyor-client');
-const connect = require('./connector');
+const connect = require('conveyor-koa-connector');
 
 const app = new Koa();
 const c = conveyor.Client('localhost', 3000, false);
 app.use(bodyParser());
 
-connect(app, c.getConnection(), 'http://localhost:3300')
-    .then(() => app.listen(8080))
+connect(app, c.getConnection(), 'http://localhost:8080')
+    .then(() => app.listen(8080));
 
 ```

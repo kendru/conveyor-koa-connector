@@ -1,8 +1,8 @@
 {
   "name": "conveyor-koa-connector",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Koa Webhook connector for conveyor-client",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src/ --out-dir lib",
     "test": "echo \"Error: no test specified\" && exit 1",
