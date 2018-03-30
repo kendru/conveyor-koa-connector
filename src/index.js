@@ -17,7 +17,7 @@ class EventBuffer {
     }
 
     setEmitImpl(emitImpl) {
-        this.emitImpl = this.emitImpl
+        this.emitImpl = emitImpl
         if (this.events.length > 0) {
             this.events.forEach(e => this.emitImpl(e))
             this.events = []
