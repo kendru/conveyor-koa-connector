@@ -1,6 +1,6 @@
 {
   "name": "conveyor-koa-connector",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Koa Webhook connector for conveyor-client",
   "main": "lib/index.js",
   "scripts": {

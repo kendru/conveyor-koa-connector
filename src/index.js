@@ -52,18 +52,24 @@ async function connect(koaApp, connectionOrClient, baseUrl) {
         connection = connectionOrClient
     }
     
+    let doCancel
     // Defer registration until the koa app is up and ready to respond to the webhook
     const oldCallback = koaApp.callback.bind(koaApp)
     koaApp.callback = function conveyorWrappedCallback() {
         impl.registerSubscriptionImpl(connection, function registerImplementation(emit, cancel) {
             buffer.setEmitImpl(emit)
-            // TODO: add hook to call cancel on shutdown - may be able to hook into Koa,
-            // otherwise we would need to catch process signals
+            doCancel = cancel
             return baseUrl + callbackEndpoint
         })
         .catch((err) => console.error('Error subscribing to Conveyor events', err))
         
         return oldCallback()
+    }
+
+    return async function cancel() {
+        if (doCancel) {
+            await doCancel()
+        }
     }
 }
 
